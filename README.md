@@ -9,9 +9,7 @@ Handles getting an image from the network and caches image to caches directory o
 * Xcode 10.2+ 
 * Swift 5.0+ 
 
-## Installation 
-
-Currently ImageKit only has support for Swift package manager. 
+## Swift Package Installation 
 
 To install copy this github url
 ```https://github.com/alexpaul/ImageKit```  
