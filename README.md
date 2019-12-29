@@ -46,3 +46,8 @@ imageView.getImage(with: imageURL) { (result) in
 }
 
 ```
+
+## License 
+
+ImageKit is released under the MIT license. See [LICENSE](https://github.com/alexpaul/ImageKit/blob/master/LICENSE) for details.
+
