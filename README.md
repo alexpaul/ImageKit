@@ -31,6 +31,8 @@ Navigate to Xcode and do the following:
 
 ## Usage 
 
+By default images are cached to avoid making additional network requests. Cache is purged by iOS as needed. If you need to permanently save images you can override the the default directory from default argument .cachesDirectory to .documentsDirectory as follows ```getImage(with: imageURL, writeTo: .documentsDirectory))```
+
 ```swift 
 imageView.getImage(with: imageURL) { (result) in
   switch result {
