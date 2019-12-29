@@ -15,8 +15,8 @@ Currently ImageKit only has support for Swift package manager. To install copy t
 
 ## Swift Package Dependencies 
 
-* [NetworkHelperSPM](https://github.com/alexpaul/NetworkHelperSPM)
-* [DataPersistence](https://github.com/alexpaul/DataPersistence)
+* [NetworkHelperSPM](https://github.com/alexpaul/NetworkHelperSPM) - for making network requests to fecth image
+* [DataPersistence](https://github.com/alexpaul/DataPersistence) - to persists image in cache or documents directory
 
 ## Usage 
 
