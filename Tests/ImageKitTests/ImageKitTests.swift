@@ -2,14 +2,26 @@ import XCTest
 @testable import ImageKit
 
 final class ImageKitTests: XCTestCase {
-    func NOT_WORKING_testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        //XCTAssertEqual(ImageKit().text, "Hello, World!")
+  func testFetchImageFromOnline() {
+    // arrange
+    let exp = XCTestExpectation(description: "fetched image")
+    let imageURLString = "https://developer.apple.com/swift/images/swift-og.png"
+    let imageView = UIImageView()
+    
+    // act
+    imageView.getImage(with: imageURLString, writeTo: .documentsDirectory) { [weak imageView] result in
+      switch result {
+      case .failure:
+        XCTFail("failed to fetch image at url: \(imageURLString)")
+      case .success(let image):
+        DispatchQueue.main.async {
+          imageView?.image = image
+        }
+        XCTAssertNotNil(image)
+        exp.fulfill()
+      }
     }
-
-    static var allTests = [
-        ("testExample", NOT_WORKING_testExample),
-    ]
+    
+    wait(for: [exp], timeout: 5.0)
+  }
 }
