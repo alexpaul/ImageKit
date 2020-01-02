@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "DataPersistence",
+        "repositoryURL": "https://github.com/alexpaul/DataPersistence",
+        "state": {
+          "branch": null,
+          "revision": "f35ee03b8c70c27f6e0743d7fb9f5758ad6d856b",
+          "version": "1.0.6"
+        }
+      },
+      {
+        "package": "NetworkHelper",
+        "repositoryURL": "https://github.com/alexpaul/NetworkHelperSPM",
+        "state": {
+          "branch": null,
+          "revision": "45c1b27713db8916b8ddff6bd298e72d53d675d6",
+          "version": "1.0.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
