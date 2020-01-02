@@ -16,8 +16,8 @@ extension UIImageView {
                      image: UIImage,
                      path: String) {
     // get the caches directory and use the last component above to create a file path for saving the image data
-    let cachesDirectoryURL = FileManager.getCachesDirectory()
-    let filepath = cachesDirectoryURL.appendingPathComponent(path)
+    let directoryURL = directory == .cachesDirectory ? FileManager.getCachesDirectory() : FileManager.getDocumentsDirectory()
+    let filepath = directoryURL.appendingPathComponent(path)
     
     // convert image to data (png or jpg)
     let imageData = image.pngData()
@@ -64,7 +64,8 @@ extension UIImageView {
     }
     
     // check the cache
-    if let cachedImage = cachedImage(for: url.lastPathComponent) {
+    let filename = url.lastPathComponent
+    if let cachedImage = cachedImage(for: filename, directory: directory) {
       completion(.success(cachedImage))
       activityIndicator.stopAnimating()
       return
