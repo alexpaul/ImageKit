@@ -27,9 +27,10 @@ extension UIImageView {
   }
   
   // retrieves an image from the caches directory
-  public func cachedImage(for filename: String) -> UIImage? {
-    let cachesDirectoryURL = FileManager.getCachesDirectory()
-    let filepath = cachesDirectoryURL.appendingPathComponent(filename)
+  public func cachedImage(for filename: String, directory: Directory = .cachesDirectory) -> UIImage? {
+    let directoryURL = directory == .cachesDirectory ? FileManager.getCachesDirectory() : FileManager.getDocumentsDirectory()
+ 
+    let filepath = directoryURL.appendingPathComponent(filename)
     guard FileManager.default.fileExists(atPath: filepath.path) else {
       return nil
     }

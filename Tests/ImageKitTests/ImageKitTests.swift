@@ -1,7 +1,9 @@
 import XCTest
 @testable import ImageKit
+@testable import DataPersistence
 
 final class ImageKitTests: XCTestCase {
+    
   func testFetchImageFromOnline() {
     // arrange
     let exp = XCTestExpectation(description: "fetched image")
@@ -9,7 +11,7 @@ final class ImageKitTests: XCTestCase {
     let imageView = UIImageView()
     
     // act
-    imageView.getImage(with: imageURLString, writeTo: .documentsDirectory) { [weak imageView] result in
+    imageView.getImage(with: imageURLString) { [weak imageView] result in
       switch result {
       case .failure:
         XCTFail("failed to fetch image at url: \(imageURLString)")
@@ -17,6 +19,7 @@ final class ImageKitTests: XCTestCase {
         DispatchQueue.main.async {
           imageView?.image = image
         }
+        // assert
         XCTAssertNotNil(image)
         exp.fulfill()
       }
