@@ -60,6 +60,7 @@ extension UIImageView {
     
     guard let url = URL(string: urlString) else {
       completion(.failure(.badURL(urlString)))
+      activityIndicator.stopAnimating()
       return
     }
     
