@@ -86,7 +86,8 @@ extension UIImageView {
           // cache image
           // get the last path component of the url, we will use this as the filename e.g someImage.jpg
           let lastComponent = url.lastPathComponent
-          self?.write(to: directory, image: image, path: lastComponent)
+          // TODO: option not to cache
+          //self?.write(to: directory, image: image, path: lastComponent)
           
           completion(.success(image))
         }
