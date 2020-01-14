@@ -15,7 +15,6 @@ extension UIImageView {
   private func write(to directory: Directory,
                      image: UIImage,
                      path: String) {
-    // get the caches directory and use the last component above to create a file path for saving the image data
     let directoryURL = directory == .cachesDirectory ? FileManager.getCachesDirectory() : FileManager.getDocumentsDirectory()
     let filepath = directoryURL.appendingPathComponent(path)
     
@@ -65,7 +64,7 @@ extension UIImageView {
     }
     
     // check the cache
-    let filename = url.lastPathComponent
+    let filename = createComponentString(from: url)
     if let cachedImage = cachedImage(for: filename, directory: directory) {
       completion(.success(cachedImage))
       activityIndicator.stopAnimating()
@@ -83,15 +82,21 @@ extension UIImageView {
         completion(.failure(.networkClientError(appError)))
       case .success(let data):
         if let image = UIImage(data: data) {
-          // cache image
-          // get the last path component of the url, we will use this as the filename e.g someImage.jpg
-          let lastComponent = url.lastPathComponent
-          // TODO: option not to cache
-          //self?.write(to: directory, image: image, path: lastComponent)
+          // cache image to disk
+          let componentStr = self?.createComponentString(from: url) ?? ""
+          self?.write(to: directory, image: image, path: componentStr)
           
           completion(.success(image))
         }
       }
     }
+  }
+  
+  private func createComponentString(from url: URL) -> String {
+    var componentStr = ""
+    for component in url.pathComponents where component != "/" {
+      componentStr += component
+    }
+    return componentStr
   }
 }
