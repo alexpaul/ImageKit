@@ -46,16 +46,20 @@ extension UIImageView {
                        completion: @escaping (Result<UIImage, AppError>) -> ()) {
     
     // The UIActivityIndicatorView is used to indicate to the user that a download is in progress
-    var activityIndicator = UIActivityIndicatorView(style: .large)
-    activityIndicator.color = UIColor.systemOrange
-    activityIndicator.startAnimating() // it's hidden until we explicitly start animating
     
-    self.addSubview(activityIndicator) // we add the indicattor as a subview of the image view
-    
-    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-                                 activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
-    ])
+    var activityIndicator: UIActivityIndicatorView!
+    DispatchQueue.main.async {
+      activityIndicator = UIActivityIndicatorView(style: .large)
+      activityIndicator.color = UIColor.systemOrange
+      activityIndicator.startAnimating() // it's hidden until we explicitly start animating
+      
+      self.addSubview(activityIndicator) // we add the indicattor as a subview of the image view
+      
+      activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+      NSLayoutConstraint.activate([activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                                   activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+      ])
+    }
     
     guard let url = URL(string: urlString) else {
       completion(.failure(.badURL(urlString)))
