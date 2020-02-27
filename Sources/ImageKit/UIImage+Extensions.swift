@@ -28,7 +28,7 @@ extension UIImageView {
   // retrieves an image from the caches directory
   public func cachedImage(for filename: String, directory: Directory = .cachesDirectory) -> UIImage? {
     let directoryURL = directory == .cachesDirectory ? FileManager.getCachesDirectory() : FileManager.getDocumentsDirectory()
- 
+    
     let filepath = directoryURL.appendingPathComponent(filename)
     guard FileManager.default.fileExists(atPath: filepath.path) else {
       return nil
@@ -46,22 +46,26 @@ extension UIImageView {
                        completion: @escaping (Result<UIImage, AppError>) -> ()) {
     
     // The UIActivityIndicatorView is used to indicate to the user that a download is in progress
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+    var activityIndicator: UIActivityIndicatorView!
     DispatchQueue.main.async {
+      activityIndicator = UIActivityIndicatorView(style: .large)
+      activityIndicator = UIActivityIndicatorView(style: .large)
       activityIndicator.color = UIColor.systemOrange
       activityIndicator.startAnimating() // it's hidden until we explicitly start animating
-       
+      
       self.addSubview(activityIndicator) // we add the indicattor as a subview of the image view
-       
+      
       activityIndicator.translatesAutoresizingMaskIntoConstraints = false
       NSLayoutConstraint.activate([activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
                                    activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-       ])
+      ])
     }
     
     guard let url = URL(string: urlString) else {
       completion(.failure(.badURL(urlString)))
-      activityIndicator.stopAnimating()
+      DispatchQueue.main.async {
+        activityIndicator.stopAnimating()
+      }
       return
     }
     
@@ -69,7 +73,9 @@ extension UIImageView {
     let filename = createComponentString(from: url)
     if let cachedImage = cachedImage(for: filename, directory: directory) {
       completion(.success(cachedImage))
-      activityIndicator.stopAnimating()
+      DispatchQueue.main.async {
+        activityIndicator.stopAnimating()
+      }
       return
     }
     
